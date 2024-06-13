@@ -1,6 +1,7 @@
 package com.example.lab8_kt
 
 import android.app.ProgressDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ProgressBar
@@ -33,23 +34,28 @@ class MainActivity : AppCompatActivity() {
         button2.setOnClickListener { displayDialog4() }
     }
 
+    companion object {
+        const val MAX = 25
+    }
+
     private fun displayDialog4() {
         val d = ProgressDialog(this)
         d.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL)
         d.setMessage("loading...")
         //d.setButton(DialogInterface.BUTTON_POSITIVE, "OK", null)
         d.max = 25
-        d.setOnCancelListener {
+        d.setButton(DialogInterface.BUTTON_POSITIVE, "OK") { di, w -> di.cancel() }
+        d.setOnDismissListener{
             Toast.makeText(this, "進度條執行結束", Toast.LENGTH_SHORT).show()
         }
         d.show()
         Thread() {
             var i = 0
-            for (i in 0..d.max) {
+            for (i in 0..MAX) {
                 Thread.sleep(100)
                 d.progress = i
             }
-            d.cancel()
+            d.dismiss()
         }.start()
         //d.progress = 36
     }
