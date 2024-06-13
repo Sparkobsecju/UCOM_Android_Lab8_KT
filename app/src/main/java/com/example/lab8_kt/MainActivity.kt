@@ -3,6 +3,7 @@ package com.example.lab8_kt
 import android.app.ProgressDialog
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -28,6 +29,23 @@ class MainActivity : AppCompatActivity() {
         button2 = findViewById(R.id.button2)
         textView = findViewById(R.id.textView1)
         button1.setOnClickListener { displayDialog1() }
+        button2.setOnClickListener { displayDialog4() }
+    }
+
+    private fun displayDialog4() {
+        val d = ProgressDialog(this)
+        d.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL)
+        d.setMessage("loading...")
+        //d.setButton(DialogInterface.BUTTON_POSITIVE, "OK", null)
+        d.show()
+        Thread() {
+            var i = 0
+            for (i in 0..100) {
+                Thread.sleep(100)
+                d.progress = i
+            }
+        }.start()
+        //d.progress = 36
     }
 
 
