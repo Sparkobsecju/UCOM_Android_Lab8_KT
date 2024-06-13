@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity() {
         d.setCancelable(false)
         d.show()
         Thread {
-            Thread.sleep(5000)
+            Thread.sleep(3000)
             runOnUiThread {
                 d.cancel()
             }
