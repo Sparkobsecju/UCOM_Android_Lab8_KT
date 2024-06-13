@@ -3,7 +3,9 @@ package com.example.lab8_kt
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -24,5 +26,24 @@ class MainActivity : AppCompatActivity() {
         button1 = findViewById(R.id.button1)
         button2 = findViewById(R.id.button2)
         textView = findViewById(R.id.textView1)
+        button1.setOnClickListener { displayDialog1() }
     }
+
+
+    private fun displayDialog1() {
+        val builder = AlertDialog.Builder(this)
+            .setTitle("這是我的對話框")
+            .setMessage("細節放這")
+            .setPositiveButton("OK") { d, w -> }
+            .setNegativeButton("Quit") { d, w -> finish() }
+            .setNeutralButton("Wait") { d, w ->
+                Toast.makeText(
+                    this,
+                    "waiting",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            .show()
+    }
+
 }
