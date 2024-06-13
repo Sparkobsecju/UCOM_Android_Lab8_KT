@@ -1,5 +1,6 @@
 package com.example.lab8_kt
 
+import android.app.ProgressDialog
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -32,9 +33,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun displayDialog1() {
         val builder = AlertDialog.Builder(this)
-            .setTitle("這是我的對話框")
-            .setMessage("細節放這")
-            .setPositiveButton("OK") { d, w -> }
+            .setTitle("商店選單")
+            .setMessage("是否選擇支付")
+            .setPositiveButton("OK") { d, w -> displayDialog2()}
             .setNegativeButton("Quit") { d, w -> finish() }
             .setNeutralButton("Wait") { d, w ->
                 Toast.makeText(
@@ -42,8 +43,41 @@ class MainActivity : AppCompatActivity() {
                     "waiting",
                     Toast.LENGTH_SHORT
                 ).show()
+                displayDialog3()
             }
             .show()
+
+    }
+
+    private fun displayDialog3() {
+        val d = ProgressDialog(
+            this
+        )
+        d.setTitle("剛才設的標題")
+        d.setMessage("要再等一會兒")
+        //d.setCancelable(true)
+        d.setCancelable(false)
+        d.show()
+        Thread {
+            Thread.sleep(5000)
+            runOnUiThread {
+                d.cancel()
+            }
+        }.start()
+    }
+
+    private fun displayDialog2() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("多重選擇題")
+        //builder.setMessage("選項在此")
+        builder.setItems(R.array.stores) { d, w ->
+            d.dismiss()
+            val t: TextView = findViewById(R.id.textView1)
+            t.text = "第${1 + w}個選項被點擊"
+            //Toast.makeText(this,"第${w}個選項被點擊",Toast.LENGTH_SHORT).show()
+        }
+        builder.show()
+
     }
 
 }

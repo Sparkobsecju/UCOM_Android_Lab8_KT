@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Lab8_KT</string>
+    <string-array name="stores">
+        <item>7-11</item>
+        <item>Fami</item>
+        <item>OK</item>
+        <item>Hi-Life</item>
+        <item>MRT</item>
+        <item>Line Pay</item>
+    </string-array>
 </resources>
