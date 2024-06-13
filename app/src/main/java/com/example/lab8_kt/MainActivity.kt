@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import kotlinx.coroutines.NonCancellable.cancel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var button1: Button
@@ -37,13 +38,18 @@ class MainActivity : AppCompatActivity() {
         d.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL)
         d.setMessage("loading...")
         //d.setButton(DialogInterface.BUTTON_POSITIVE, "OK", null)
+        d.max = 25
+        d.setOnCancelListener {
+            Toast.makeText(this, "進度條執行結束", Toast.LENGTH_SHORT).show()
+        }
         d.show()
         Thread() {
             var i = 0
-            for (i in 0..100) {
+            for (i in 0..d.max) {
                 Thread.sleep(100)
                 d.progress = i
             }
+            d.cancel()
         }.start()
         //d.progress = 36
     }
@@ -53,7 +59,7 @@ class MainActivity : AppCompatActivity() {
         val builder = AlertDialog.Builder(this)
             .setTitle("商店選單")
             .setMessage("是否選擇支付")
-            .setPositiveButton("OK") { d, w -> displayDialog2()}
+            .setPositiveButton("OK") { d, w -> displayDialog2() }
             .setNegativeButton("Quit") { d, w -> finish() }
             .setNeutralButton("Wait") { d, w ->
                 Toast.makeText(
